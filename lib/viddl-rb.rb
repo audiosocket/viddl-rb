@@ -45,7 +45,11 @@ module ViddlRb
       rescue StandardError => e
         raise_plugin_error(e, plugin)
       end
-      follow_all_redirects(urls_filenames)
+      if plugin.respond_to?(:no_follow) && plugin.no_follow
+        urls_filenames
+      else
+        follow_all_redirects(urls_filenames)
+      end
     else
       nil
     end
